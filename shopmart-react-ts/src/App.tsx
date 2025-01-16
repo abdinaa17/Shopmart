@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router"
-import { About, Cart, Home, OrderHistory, Products } from "./pages"
+import { About, Cart, Home, OrderHistory, Products, SingleProduct } from "./pages"
 import Navabar from "./components/Navabar"
+import Footer from "./components/Footer"
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
             </Route>
             <Route path="/products" element={<Products />}>
             </Route>
+            <Route path="/products/:id" element={<SingleProduct />} ></Route>
             <Route path="/about" element={<About />}>
             </Route>
             <Route path="/cart" element={<Cart />}>
@@ -20,6 +22,7 @@ const App = () => {
             </Route>
 
         </Routes>
+        <Footer />
     </Router>
   )
 }
