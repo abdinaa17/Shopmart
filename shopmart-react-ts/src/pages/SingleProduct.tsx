@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router"
+import ErrorMessage from "../components/ErrorMessage";
 interface Product {
     id:number,
     name:string,
@@ -10,32 +11,57 @@ interface Product {
 const SingleProduct = () => {
 
     const [product, setProduct] = useState<Product>()
+    const [isLoding, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null | any> (null);
 
     const {id} = useParams<{id:string}>();
 
-    
-
+    const prodIdNum:number = Number(id);
+     
     const fetchProducts = async () => {
 
-        const res = await fetch("http://localhost:8080/api/v1/products");
+        setIsLoading(true);
+        setError(null);
 
-        const data: Product[] = await res.json();
 
-        const singeleProduct = data.find((prod) => prod.id == Number(id));
+        try {
 
-        setProduct(singeleProduct);
+            const res = await fetch(`http://localhost:8080/api/v1/products/${prodIdNum}`);
+
+
+
+            if(!res.ok) {
+                throw new Error("No product with id " + prodIdNum + " exists");
+                
+            }
+
+            const data:Product = await res.json();
+
+            setProduct(data);        
+            
+        } catch (error: any) {
+            setError(error.message || "Someting went wrong");
+            console.log(error.message);
+            
+        }finally {
+            setIsLoading(false);
+        }
+
     }
 
     useEffect(()=> {
         fetchProducts()
     }, [])
 
+    if(isLoding) {
+        return <p>Loading...</p>
+    }
 
-    console.log(id);
-
-
-
-    
+    if(error) {
+        return (
+            <ErrorMessage err={error}/>
+        )
+    }
   return (
     <main className="container">
         <div className="flex my-3">

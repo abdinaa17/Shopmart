@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router"
-import { About, Cart, Home, OrderHistory, Products, SingleProduct } from "./pages"
+import { About, Cart, ErrorPage, Home, OrderHistory, Products, SingleProduct } from "./pages"
 import Navabar from "./components/Navabar"
 import Footer from "./components/Footer"
 
@@ -19,6 +19,9 @@ const App = () => {
             <Route path="/cart" element={<Cart />}>
             </Route>
             <Route path="/orders" element={<OrderHistory />}>
+            </Route>
+            <Route path="*" element={<ErrorPage />}>
+
             </Route>
 
         </Routes>
