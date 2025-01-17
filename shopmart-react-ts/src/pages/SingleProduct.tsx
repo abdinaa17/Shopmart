@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import ErrorMessage from "../components/ErrorMessage";
 interface Product {
     id:number,
@@ -8,15 +8,22 @@ interface Product {
     category: string,
     price: number
 }
+
+interface Cart {
+    product: Product,
+    qty : number
+}
 const SingleProduct = () => {
 
     const [product, setProduct] = useState<Product>()
+    const [cart, setCart] = useState<Cart[]>([]);
     const [isLoding, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null | any> (null);
 
     const {id} = useParams<{id:string}>();
-
     const prodIdNum:number = Number(id);
+
+    const navigate = useNavigate();
      
     const fetchProducts = async () => {
 
@@ -53,6 +60,36 @@ const SingleProduct = () => {
         fetchProducts()
     }, [])
 
+    // Add to cart
+    const handleAddToCart = (product: Product | void) => {
+
+        if(!product) {
+            return;
+        }
+        const cartItem: Cart = {product: product, qty: 1};
+        const tempCart: Cart[] = [cartItem];
+        // console.log(tempCart);
+        
+        // setCart((prev) => ({
+        //     ...prev,
+        //     tempCart
+        //   }));
+        // console.log(cart);
+
+        // setCart((prev) => ({
+        //     ...prev,
+        //     cartItem
+        // }))
+
+        // console.log(cart);
+        console.log(tempCart);
+        
+        
+        localStorage.setItem("cart", JSON.stringify(tempCart));
+        navigate("/cart");
+
+    }
+
     if(isLoding) {
         return <p>Loading...</p>
     }
@@ -62,6 +99,7 @@ const SingleProduct = () => {
             <ErrorMessage err={error}/>
         )
     }
+ 
   return (
     <main className="container">
         <div className="flex my-3">
@@ -73,11 +111,12 @@ const SingleProduct = () => {
                 <h5 className="my-2">Price: ${product?.price}</h5>
                 <p className="my-2">{product?.description}</p>
                 <span>Category: <small className="tag">{product?.category}</small></span>
-                <div className="my-2">
-                <label htmlFor="qty">Qty</label>
-                <input type="number" name="qty" id="" size={2}/>
-                <button className="btn btn-primary my-2 db">Add to cart</button>
-            </div>
+                <button
+                    className="btn btn-secondary my-2 db"
+                    onClick={() => handleAddToCart(product)}
+                    >
+                    Add to cart
+                </button>
             </div>
         </div>
 

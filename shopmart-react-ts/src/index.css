@@ -7,6 +7,7 @@
 }
 :root {
     --primary-clr: #f739eb;
+    --secondary-clr: #39f7b3;
     --body-bg: #161616;
     --white: #fff;
     --transition: all .3s ease;
@@ -38,7 +39,7 @@ a:hover {
     max-width: 1200px;
     margin: 0 auto;
 }
-
+   
 
 /* Navbar */
 header {
@@ -86,6 +87,11 @@ header {
     height: 500px;
     width: 500px;
 
+}
+
+/* Error page */
+.errorpage {
+    height: 75vh;
 }
 /* Cards */
 
@@ -194,7 +200,11 @@ header {
 
 .btn-primary {
     background-color: var(--primary-clr);
-    color: #fff;
+    color: var(--white);
+}
+.btn-secondary {
+    background-color: var(--secondary-clr);
+    color: var(--body-bg);
 }
 /* tag */
 .tag {
@@ -203,5 +213,7 @@ header {
     font-style: italic;
     border: 2px solid transparent; 
     background-color: var(--primary-clr);
+    color: var(--white);
+
 }
 

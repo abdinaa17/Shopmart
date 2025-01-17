@@ -1,7 +1,13 @@
+import { Link } from "react-router"
 
 const ErrorPage = () => {
   return (
-    <div>ErrorPage</div>
+    <div className="errorpage container">
+        <h1 className="my-3 ">404 page not found</h1>
+        <button className="btn btn-secondary">
+            <Link to="/">go home</Link>
+        </button>
+    </div>
   )
 }
 
