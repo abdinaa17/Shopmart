@@ -217,3 +217,8 @@ header {
 
 }
 
+/* tabble */
+table, th, td {
+    border: 2px solid var(--secondary-clr);
+    border-collapse: collapse;
+}
