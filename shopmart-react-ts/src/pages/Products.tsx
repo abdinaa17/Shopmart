@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import Loading from "../components/Loading";
 
 
 
@@ -48,7 +49,7 @@ const Products = () => {
     }, [])
 
     if(isLoading) {
-        return <p>Loading...</p>
+        return <Loading />
     }
     if(error) {
         return <p>{error}</p>

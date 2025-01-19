@@ -10,6 +10,8 @@
     --secondary-clr: #39f7b3;
     --body-bg: #161616;
     --white: #fff;
+    --danger-clr: #d9534f;
+    --border-clr:  hsl(217.2 32.6% 17.5%);
     --transition: all .3s ease;
 }
 body {
@@ -35,6 +37,10 @@ a:hover {
     transition: var(--transition);
 }
 
+img {
+    display: block;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -44,7 +50,7 @@ a:hover {
 /* Navbar */
 header {
     height: 10vh;
-    border-bottom: 2px solid hsl(217.2 32.6% 17.5%);
+    border-bottom: 2px solid var(--border-clr);
 }
 .nav {
     display: flex;
@@ -93,13 +99,51 @@ header {
 .errorpage {
     height: 75vh;
 }
+
+/* Cart page */
+.cart-table {
+    width: 80%;
+}
+.cart-table th {
+    border-bottom: 2px solid var(--border-clr);
+    text-align: left;
+}
+ .cart-table td, .cart-table th {
+    padding: 2rem 0 2rem 2rem;
+}
+
+.cart-table:last-child td{
+    background-color: green;
+}
+
+.cart-btn {
+    cursor: pointer;
+    border-radius: 50px;
+    font-weight: 600;
+    border: none;
+    transition: var(--transition);
+    text-transform: capitalize;
+    padding: 4px 10px;
+
+}
+.cart-subtotal {
+    width: 30%;
+    text-align: center;
+}
+.cart-img {
+  height: 30%;
+  width: 30%;
+  margin: 3rem auto;
+}
+
+.cart-clear {
+    padding: 0 !important;
+}
 /* Cards */
 
 .card {
-    /* background-color: red; */
     width: 300px;
     height: 300px;
-    /* border: 2px solid black; */
     border-radius: 10px;
     overflow: hidden;
     box-shadow:0px 2px 10px rgba(248, 237, 237, 0.1) ;
@@ -148,7 +192,15 @@ header {
 .my-3 {
     margin: 3rem 0;
 }
-
+.mt-1 {
+    margin-top: 1rem;
+}
+.mt-2 {
+    margin-top: 2rem;
+}
+.mt-3 {
+    margin-top: 3rem;
+}
 .mx-1 {
     margin: 0 1rem;
 }
@@ -169,7 +221,15 @@ header {
 .py-3 {
     padding: 3rem 0;
 }
-
+.pt-1 {
+    padding-top: 1rem;
+}
+.pt-2 {
+    padding-top: 2rem;
+}
+.pt-3 {
+    padding-top: 3rem;
+}
 .px-1 {
     padding: 0 1rem;
 }
@@ -181,6 +241,13 @@ header {
 }
 .db {
     display: block;
+}
+.vh-75 {
+    height: 75vh; 
+}
+
+.min-vh-75 {
+    min-height: 75vh; 
 }
 /* Buttons */
 .btn {
@@ -206,6 +273,13 @@ header {
     background-color: var(--secondary-clr);
     color: var(--body-bg);
 }
+.btn-danger {
+    background-color: var(--danger-clr);
+    color: var(--white);
+}
+.text-center {
+    text-align: center;
+}
 /* tag */
 .tag {
     cursor: pointer;
@@ -217,8 +291,27 @@ header {
 
 }
 
-/* tabble */
-table, th, td {
-    border: 2px solid var(--secondary-clr);
-    border-collapse: collapse;
-}
+/* 
+    Loading animation
+ */
+
+ /* HTML: <div class="loader"></div> */
+.loader {
+    width: 200px;
+    height: 200px;
+    aspect-ratio: 1;
+    --c: no-repeat linear-gradient(var(--white) 0 0);
+    background: 
+      var(--c) 0%   50%,
+      var(--c) 50%  50%,
+      var(--c) 100% 50%;
+    background-size: 20% 100%;
+    animation: l1 1s infinite linear;
+  }
+  @keyframes l1 {
+    0%  {background-size: 20% 100%,20% 100%,20% 100%}
+    33% {background-size: 20% 10% ,20% 100%,20% 100%}
+    50% {background-size: 20% 100%,20% 10% ,20% 100%}
+    66% {background-size: 20% 100%,20% 100%,20% 10% }
+    100%{background-size: 20% 100%,20% 100%,20% 100%}
+  }

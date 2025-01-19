@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import ErrorMessage from "../components/ErrorMessage";
+import Loading from "../components/Loading";
 interface Product {
     id:number,
     name:string,
@@ -61,37 +62,55 @@ const SingleProduct = () => {
     }, [])
 
     // Add to cart
-    const handleAddToCart = (product: Product | void) => {
+    const handleAddToCart = async (prod: Product | void) => {
 
-        if(!product) {
+        if(!prod) {
             return;
         }
-        const cartItem: Cart = {product: product, qty: 1};
-        const tempCart: Cart[] = [cartItem];
+        // const cartItem: Cart = {product: product, qty: 1};
+        // const tempCart: Cart[] = [cartItem];
+        // // console.log(tempCart);
+        
+        // // setCart((prev) => ({
+        // //     ...prev,
+        // //     tempCart
+        // //   }));
+        // // console.log(cart);
+
+        // // setCart((prev) => ({
+        // //     ...prev,
+        // //     cartItem
+        // // }))
+
+        // // console.log(cart);
         // console.log(tempCart);
         
-        // setCart((prev) => ({
-        //     ...prev,
-        //     tempCart
-        //   }));
-        // console.log(cart);
-
-        // setCart((prev) => ({
-        //     ...prev,
-        //     cartItem
-        // }))
-
-        // console.log(cart);
-        console.log(tempCart);
         
-        
-        localStorage.setItem("cart", JSON.stringify(tempCart));
-        navigate("/cart");
+        // localStorage.setItem("cart", JSON.stringify(tempCart));
+        try {
+            const res = await fetch("http://localhost:8080/api/v1/cart", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(prod),
+
+            })
+            if(!res.ok) {
+                throw new Error("Something went wrong");
+            }
+
+            navigate("/cart")
+
+        } catch (error) {
+            setError(error);
+        }
+
 
     }
 
     if(isLoding) {
-        return <p>Loading...</p>
+        return <Loading />
     }
 
     if(error) {
